@@ -28,18 +28,16 @@ RIGHT = 'right'
 
 # The amount of space to the sides of the board to the edge of the window
 # is used several times, so calculate it once here and store in variables.
-XMARGIN = int((WINDOWWIDTH - SQUARESIZE * BOARDWIDTH) / 2)
-YMARGIN = int((WINDOWHEIGHT - SQUARESIZE * BOARDHEIGHT) / 2)
+XMARGIN = 4
+YMARGIN = 4
 
 EMPTY_SPACE = -1 # an arbitrary, nonpositive value
-
-
 
 
 def main():
     global FPSCLOCK, DISPLAYSURF, GEMIMAGES, GAMESOUNDS, BASICFONT, BOARDRECTS
     # Initial set up.
-    
+
     pygame.init()
     FPSCLOCK = pygame.time.Clock()
     DISPLAYSURF = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))
@@ -57,36 +55,34 @@ def main():
                              SQUARESIZE))
             BOARDRECTS[x].append(r)
 
-    while True:
-     DISPLAYSURF.fill(RED)
-     runGame()
-
-
-
-def runGame():
-   
-
-    # initalize the board
     gameBoard = getBlankBoard()
-    drawBoard(gameBoard)
+    DISPLAYSURF.fill(RED)
+
+    while True:
+        drawBoard(gameBoard)
+
 
 def getBlankBoard():
     # Create and return a blank board data structure.
     board = []
+
     for x in range(BOARDWIDTH):
         board.append([EMPTY_SPACE] * BOARDHEIGHT)
+
     return board
 
+
 def drawBoard(board):
-    
-    for x in range(BOARDWIDTH):
-        print x
-        for y in range(BOARDHEIGHT):
-            print y
-            pygame.draw.rect(DISPLAYSURF, GRIDCOLOR, BOARDRECTS[x][y], 1)
+    for x in xrange(BOARDWIDTH):
+        for y in xrange(BOARDHEIGHT):
+            DISPLAYSURF.fill(GRIDCOLOR, BOARDRECTS[x][y])
+            pygame.draw.rect(DISPLAYSURF, BLACK, BOARDRECTS[x][y], 1)
             #gemToDraw = board[x][y]
             #if gemToDraw != EMPTY_SPACE:
             #    DISPLAYSURF.blit(GEMIMAGES[gemToDraw], BOARDRECTS[x][y])
+
+    pygame.display.update()
+
 
 if __name__ == '__main__':
     main()
